@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-
+#RFM analysis
 def plot_rfm_segments(rfm: pd.DataFrame, output_path: str) -> None:
     """Plot distribution of RFM segments and save to file."""
     segment_counts = rfm["Segment"].value_counts().sort_values(ascending=False)
@@ -39,6 +39,7 @@ def plot_frequency_distribution(rfm: pd.DataFrame, output_path: str) -> None:
     plt.savefig(output_path)
     plt.close()
 
+#Sales analysis
 def plot_sales_over_time(monthly_sales: pd.DataFrame):
     plt.figure(figsize=(12, 6))
     sns.lineplot(data=monthly_sales, x='Month', y='TotalPrice')
@@ -75,5 +76,38 @@ def plot_country_revenue(country_sales: pd.DataFrame):
     plt.title("Revenue by Country")
     plt.xlabel("Total Revenue")
     plt.ylabel("Country")
+    plt.tight_layout()
+    plt.show()
+
+#Churn analysis
+def plot_churn_distribution(summary_df: pd.DataFrame):
+    plt.figure(figsize=(8, 5))
+    sns.barplot(data=summary_df, x='Churn Status', y='Number of Customers', palette='coolwarm')
+    plt.title('Customer Churn Risk Breakdown')
+    plt.xlabel('Churn Risk Segment')
+    plt.ylabel('Number of Customers')
+    plt.tight_layout()
+    plt.show()
+
+#Market Basket analysis
+def plot_association_rules(rules_df: pd.DataFrame, top_n=10):
+    top = rules_df.head(top_n).copy()
+    top['rule'] = top['antecedents'].apply(lambda x: ', '.join(list(x))) + ' → ' + top['consequents'].apply(lambda x: ', '.join(list(x)))
+
+    plt.figure(figsize=(10, 6))
+    sns.barplot(data=top, y='rule', x='lift', palette='Blues_d')
+    plt.title('Top Product Association Rules (by Lift)')
+    plt.xlabel('Lift')
+    plt.ylabel('Rule')
+    plt.tight_layout()
+    plt.show()
+
+#Customer Lifetime Value
+def plot_clv_distribution(customer_df: pd.DataFrame):
+    plt.figure(figsize=(8, 5))
+    sns.histplot(customer_df['CLV'], bins=50, kde=True)
+    plt.title("Customer Lifetime Value Distribution")
+    plt.xlabel("Estimated CLV (£)")
+    plt.ylabel("Number of Customers")
     plt.tight_layout()
     plt.show()
