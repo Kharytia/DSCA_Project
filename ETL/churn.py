@@ -6,13 +6,13 @@ def calculate_customer_metrics(df: pd.DataFrame) -> pd.DataFrame:
     df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
 
     # Total price per row
-    df['TotalPrice'] = df['Quantity'] * df['UnitPrice']
+    df['TotalPrice'] = df['Quantity'] * df['Price']
 
     today = df['InvoiceDate'].max() + pd.Timedelta(days=1)
 
     customer_df = df[df['Quantity'] > 0].groupby('Customer ID').agg(
         last_purchase=('InvoiceDate', 'max'),
-        num_purchases=('InvoiceNo', 'nunique'),
+        num_purchases=('Invoice', 'nunique'),
         total_spent=('TotalPrice', 'sum')
     ).reset_index()
 
