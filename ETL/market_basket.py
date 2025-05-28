@@ -4,12 +4,12 @@ from mlxtend.frequent_patterns import apriori, association_rules
 def prepare_basket_data(df: pd.DataFrame) -> pd.DataFrame:
     """Prepare data in basket format for market basket analysis."""
     df = df[df['Quantity'] > 0]
-    df = df[df['InvoiceNo'].astype(str).str.startswith('C') == False]  # remove returns
+    df = df[df['Invoice'].astype(str).str.startswith('C') == False]  # remove returns
 
     basket = (
-        df.groupby(['InvoiceNo', 'Description'])['Quantity']
+        df.groupby(['Invoice', 'Description'])['Quantity']
         .sum().unstack().reset_index().fillna(0)
-        .set_index('InvoiceNo')
+        .set_index('Invoice')
     )
 
     # Convert to binary presence matrix
