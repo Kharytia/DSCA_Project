@@ -1,4 +1,6 @@
 import pandas as pd
+# Total price per row
+df['TotalPrice'] = df['Quantity'] * df['Price']
 
 def sales_over_time(df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate sales by month."""
@@ -22,7 +24,7 @@ def country_revenue(df: pd.DataFrame) -> pd.DataFrame:
     country_sales = df[df['Quantity'] > 0].groupby('Country')['TotalPrice'].sum().sort_values(ascending=False).reset_index()
     return country_sales
 
-def country_orders(df: pd.DataFrame) -> pd.DataFrame
+def country_orders(df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate orders by country"""
-    country_orders = df[df['Quantity']>0].groupby('Country')['Quantity'].sum().sort_values(ascending=False).reset_index()
+    country_orders = df[df['Quantity']>0].groupby('Country')['Invoice'].nunique().sort_values(ascending=False).reset_index()
     return country_orders
