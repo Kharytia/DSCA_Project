@@ -1,13 +1,14 @@
 import pandas as pd
 
-def calculate_customer_metrics(df: pd.DataFrame) -> pd.DataFrame:
+def calculate_customer_metrics(df: pd.DataFrame, churn_df: pd.DataFrame) -> pd.DataFrame:
+    df = df.merge(churn_df[['Customer ID', 'churn_status']], on='Customer ID', how='left')
     """Compute metrics per customer for CLV estimation."""
     df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
-    df['TotalPrice'] = df['Quantity'] * df['UnitPrice']
+    df['TotalPrice'] = df['Quantity'] * df['Price']
     
-    customer_df = df.groupby('CustomerID').agg({
+    customer_df = df.groupby('Customer ID').agg({
         'InvoiceDate': ['min', 'max', 'nunique'],
-        'InvoiceNo': 'nunique',
+        'Invoice': 'nunique',
         'TotalPrice': 'sum'
     })
 
@@ -27,3 +28,4 @@ def simulate_churn_loss(customer_df: pd.DataFrame, churned_customers: pd.Series)
     """Estimate potential revenue loss from churned customers."""
     churn_loss = customer_df.loc[customer_df.index.isin(churned_customers), 'CLV'].sum()
     return churn_loss
+
