@@ -5,6 +5,9 @@ This project presents a comprehensive customer and sales analysis for the fictio
 It includes robust data processing, segmentation, churn analysis, market basket insights, and strategic business recommendations.
 The goal of this project is to simulate a real-world consulting case by analyzing customer behavior, segmenting users, and providing actionable recommendations to increase customer value and reduce churn.
 
+## Dataset
+The analysis is based on the Online Retail II Dataset available on Kaggle (https://www.kaggle.com/datasets/kabilan45/online-retail-ii-dataset).
+It contains transactional data from a UK-based online retailer from 2009–2011, including customer IDs, product descriptions, quantities, prices, and countries.
 ## Tools & Libraries
 - Python (Pandas, Matplotlib, Seaborn, MLxtend, Scikit-learn)
 - Apriori Algorithm
