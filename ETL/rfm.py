@@ -38,23 +38,27 @@ def score_rfm(rfm: pd.DataFrame) -> pd.DataFrame:
 
 
 def assign_customer_segments(rfm: pd.DataFrame) -> pd.DataFrame:
-    """Assign customer segment based on RFM Score patterns."""
+    """Assign customer segments based on RFM score patterns (RFM_Score as string)."""
+    
     def segment_map(score):
-        if score == '555':
+        r = int(score[0])
+        f = int(score[1])
+        m = int(score[2])
+        
+        if r == 5 and f == 5 and m == 5:
             return 'VIP'
-        elif score[0] == '5':
+        elif r >= 4 and f >= 4:
             return 'Loyal'
-        elif score[1] == '5':
+        elif f >= 4 and m >= 4:
             return 'Frequent Buyer'
-        elif score[2] == '5':
+        elif m == 5:
             return 'Big Spender'
-        elif score in ['111', '112', '113']:
+        elif r <= 2 and f <= 2 and m <= 2:
             return 'Lost'
-        elif score.startswith('1'):
+        elif r <= 2:
             return 'At Risk'
         else:
             return 'Others'
 
     rfm['Segment'] = rfm['RFM_Score'].apply(segment_map)
     return rfm
- 
