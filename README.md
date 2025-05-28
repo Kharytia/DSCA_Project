@@ -17,6 +17,7 @@ It contains transactional data from a UK-based online retailer from 2009–2011,
 - `data/` – Raw dataset
 - `visualization/` – Saved plots for the presentation
 - `presentation/` – Final slides
+- `utils` - functions for plotting 
 - `ETL/` - Data Processing, Feature Engineering & Analysis (with separate file for each step of analysis)
 
 ## Key Analyses
