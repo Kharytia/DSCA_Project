@@ -1,7 +1,7 @@
-#!/opt/anaconda3/bin/python
-
 import os
 import pandas as pd
+import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 from ETL.extract import load_data
@@ -75,10 +75,9 @@ top_rules = get_top_rules(rules)
 plot_association_rules(rules, "visualizations/association_rules.png", top_n=10)
 
 
-# --- CLV ---
-clv_df = calculate_customer_metrics(sales)
+# CLV
+clv_df = calculate_customer_metrics(df)
 clv_df = estimate_clv(clv_df)
 loss = simulate_churn_loss(clv_df, churn_df)
-plot_clv_distribution(clv_df, "visualizations/clv_distribution.png")
 
 print(f"Estimated churn loss: £{loss:,.2f}")
