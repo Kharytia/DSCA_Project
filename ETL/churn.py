@@ -4,10 +4,7 @@ import numpy as np
 def calculate_customer_metrics(df: pd.DataFrame) -> pd.DataFrame:
     """Compute days since last purchase, number of purchases, and AOV."""
     df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
-
-    # Total price per row
     df['TotalPrice'] = df['Quantity'] * df['Price']
-
     today = df['InvoiceDate'].max() + pd.Timedelta(days=1)
 
     customer_df = df[df['Quantity'] > 0].groupby('Customer ID').agg(
@@ -37,3 +34,4 @@ def get_churn_summary(customer_df: pd.DataFrame) -> pd.DataFrame:
     """Return churn status summary for plotting or reporting."""
     summary = customer_df['churn_status'].value_counts().reset_index()
     summary.columns = ['Churn Status', 'Number of Customers']
+    return summary
