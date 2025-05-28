@@ -1,9 +1,9 @@
 import pandas as pd
-# Total price per row
-df['TotalPrice'] = df['Quantity'] * df['Price']
+
 
 def sales_over_time(df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate sales by month."""
+    df['TotalPrice'] = df['Quantity'] * df['Price']
     df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
     df['Month'] = df['InvoiceDate'].dt.to_period('M')
     monthly_sales = df[df['Quantity'] > 0].groupby('Month')['TotalPrice'].sum().reset_index()
